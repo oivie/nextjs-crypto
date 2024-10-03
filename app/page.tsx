@@ -60,6 +60,12 @@ export default function Home() {
                 Alerts
               </a>
             </li>
+
+            <li>
+              <a href="/signup" className="text-black hover:underline">
+                SignUp
+              </a>
+            </li>
           </ul>
         </div>
       </nav>
