@@ -56,11 +56,20 @@ export default function Home() {
                 News
               </a>
             </li>
+
+            
             <li>
               <a href="/alerts" className="text-black hover:underline">
                 Alerts
               </a>
             </li>
+
+            <li>
+              <a href="/gainers-losers" className="text-black hover:underline">
+                Top Gainers & Losers
+              </a>
+            </li>
+
 
             <li>
               <a href="/signup" className="text-black hover:underline">
