@@ -1,13 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
+
+// Define the type for the form data
+interface FormData {
+  username: string;
+  email: string;
+  password: string;
+}
 
 export default function Signup() {
-  const [formData, setFormData] = useState({ username: "", email: "", password: "" });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [formData, setFormData] = useState<FormData>({ username: "", email: "", password: "" });
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -30,6 +37,10 @@ export default function Signup() {
     }
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navigation Header */}
@@ -38,29 +49,19 @@ export default function Signup() {
           <div className="text-lg font-bold text-black">Crypto Dashboard</div>
           <ul className="flex space-x-4">
             <li>
-              <a href="/" className="text-black hover:underline">
-                Dashboard
-              </a>
+              <a href="/" className="text-black hover:underline">Dashboard</a>
             </li>
             <li>
-              <a href="#" className="text-black hover:underline">
-                Portfolio
-              </a>
+              <a href="/portfolio" className="text-black hover:underline">Portfolio</a>
             </li>
             <li>
-              <a href="/news" className="text-black hover:underline">
-                News
-              </a>
+              <a href="/news" className="text-black hover:underline">News</a>
             </li>
             <li>
-              <a href="#" className="text-black hover:underline">
-                Alerts
-              </a>
+              <a href="/alerts" className="text-black hover:underline">Alerts</a>
             </li>
             <li>
-              <a href="/signup" className="text-black hover:underline">
-                SignUp
-              </a>
+              <a href="/signup" className="text-black hover:underline">SignUp</a>
             </li>
           </ul>
         </div>
@@ -82,7 +83,7 @@ export default function Signup() {
               id="username"
               placeholder="Enter your username"
               value={formData.username}
-              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+              onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
@@ -97,7 +98,7 @@ export default function Signup() {
               id="email"
               placeholder="Enter your email"
               value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
@@ -112,7 +113,7 @@ export default function Signup() {
               id="password"
               placeholder="Enter your password"
               value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-lg"
               required
             />
