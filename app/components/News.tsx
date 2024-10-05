@@ -36,7 +36,7 @@ export default function News() {
             </a>
           </li>
           <li>
-            <a href="#" className="text-black hover:underline">
+            <a href="/portfolio" className="text-black hover:underline">
               Portfolio
             </a>
           </li>
@@ -46,7 +46,7 @@ export default function News() {
             </a>
           </li>
           <li>
-            <a href="#" className="text-black hover:underline">
+            <a href="/alerts" className="text-black hover:underline">
               Alerts
             </a>
           </li>

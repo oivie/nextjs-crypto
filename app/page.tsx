@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import PriceChart from "./pages/components/PriceChart";
 
+
 // Interface for the crypto data
 interface Crypto {
   id: string;
@@ -46,7 +47,7 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a href="#" className="text-black hover:underline">
+              <a href="/portfolio" className="text-black hover:underline">
                 Portfolio
               </a>
             </li>
@@ -56,7 +57,7 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a href="#" className="text-black hover:underline">
+              <a href="/alerts" className="text-black hover:underline">
                 Alerts
               </a>
             </li>

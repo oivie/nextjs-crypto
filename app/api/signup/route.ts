@@ -1,12 +1,20 @@
 import bcrypt from 'bcrypt';
 import db from '../../utils/db';
 
-export async function POST(req) {
+// Define the expected structure of the request body
+interface SignupRequestBody {
+    username: string;
+    email: string;
+    password: string;
+}
+
+export async function POST(req: Request): Promise<Response> {
     try {
-        const { username, email, password } = await req.json();
+        // Parse the request body
+        const { username, email, password }: SignupRequestBody = await req.json();
 
         // Check if the user already exists
-        const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [rows]: [any[], any] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
         if (rows.length > 0) {
             return new Response(JSON.stringify({ error: 'User already exists' }), { status: 409 });
         }
@@ -28,6 +36,6 @@ export async function POST(req) {
     }
 }
 
-export async function GET(req) {
+export async function GET(req: Request): Promise<Response> {
     return new Response(JSON.stringify({ message: 'This API only supports POST requests' }), { status: 405 });
 }
