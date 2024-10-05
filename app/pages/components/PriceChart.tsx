@@ -1,9 +1,14 @@
 import { Line } from 'react-chartjs-2';
 import { Chart, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
 
+// Register the required chart components
 Chart.register(LineElement, CategoryScale, LinearScale, PointElement);
 
-const PriceChart = ({ coinId }) => {
+interface PriceChartProps {
+  coinId: string; // Type definition for `coinId`
+}
+
+const PriceChart = ({ coinId }: PriceChartProps) => {
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [

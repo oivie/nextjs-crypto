@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react';
-import PriceChart from '../components/PriceChart';
+import PriceChart from './components/PriceChart';
 import api from '../utils/api';
 
+// Define the type for each cryptocurrency
+interface Crypto {
+  id: string;
+  name: string;
+  current_price: number;
+  market_cap: number;
+  price_change_percentage_24h: number;
+}
+
 export default function Home() {
-  const [cryptos, setCryptos] = useState([]);
+  const [cryptos, setCryptos] = useState<Crypto[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,7 +43,7 @@ export default function Home() {
             <p>Price: ${crypto.current_price}</p>
             <p>Market Cap: ${crypto.market_cap.toLocaleString()}</p>
             <p>24h Change: {crypto.price_change_percentage_24h}%</p>
-            <PriceChart coinId="bitcoin" />
+            <PriceChart coinId={crypto.id} />
           </div>
         ))}
       </div>
