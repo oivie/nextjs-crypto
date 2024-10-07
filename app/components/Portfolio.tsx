@@ -23,9 +23,8 @@ export default function Portfolio() {
   useEffect(() => {
     const fetchPortfolioData = async () => {
       try {
-        const response = await fetch(
-          `/api/portfolio?coinIds=${coinIds.join(",")}&timePeriod=${timePeriod}`
-        );
+        const response = await fetch(`/api/portfolio?coinIds=${coinIds.join(",")}&timePeriod=${timePeriod}`);
+        
         if (!response.ok) {
           throw new Error("Failed to fetch portfolio data");
         }
@@ -41,30 +40,6 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navigation Header */}
-      <nav className="bg-blue-600 p-4">
-        <div className="container mx-auto flex justify-between">
-          <div className="text-lg font-bold text-black">Crypto Dashboard</div>
-          <ul className="flex space-x-4">
-            <li>
-              <a href="/" className="text-black hover:underline">Dashboard</a>
-            </li>
-            <li>
-              <a href="/portfolio" className="text-black hover:underline">Portfolio</a>
-            </li>
-            <li>
-              <a href="/news" className="text-black hover:underline">News</a>
-            </li>
-            <li>
-              <a href="/alerts" className="text-black hover:underline">Alerts</a>
-            </li>
-            <li>
-              <a href="/signup" className="text-black hover:underline">SignUp</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-
       {/* Portfolio Content */}
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-4 text-black">My Portfolio</h1>
