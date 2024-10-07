@@ -9,7 +9,7 @@ const db: Pool = mysql.createPool({
     password: 'romy', // Database password
     database: 'crypto', // Database name
     waitForConnections: true,
-    connectionLimit: 10, // Adjust this based on your app's needs
+    connectionLimit: 30, // Adjust this based on your app's needs
     queueLimit: 0,
 });
 

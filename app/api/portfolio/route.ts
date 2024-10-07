@@ -49,25 +49,34 @@ export async function GET(request: Request) {
 
 
 async function getCurrentPrices(coinIds: string[]): Promise<PriceResponse> {
-  const response = await fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(",")}&vs_currencies=usd`
-  );
-  if (!response.ok) throw new Error("Failed to fetch current prices");
-  return await response.json();
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds.join(",")}&vs_currencies=usd`
+    );
+    if (!response.ok) {
+      console.error("Failed to fetch current prices. Response status:", response.status);
+      throw new Error("Failed to fetch current prices");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error in getCurrentPrices:", error);
+    throw error;
+  }
 }
 
-
 async function getMarketChart(coinId: string, days: string): Promise<any> {
-  const response = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
-  );
-  
-  if (!response.ok) {
-    const errorMessage = `Failed to fetch market chart data for ${coinId}: ${response.statusText}`;
-    console.error(errorMessage);
-    throw new Error(errorMessage);
+  try {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
+    );
+    if (!response.ok) {
+      console.error(`Failed to fetch market chart for ${coinId}. Response status:`, response.status);
+      throw new Error(`Failed to fetch market chart data for ${coinId}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Error in getMarketChart for ${coinId}:`, error);
+    throw error;
   }
-
-  return await response.json();
 }
 
