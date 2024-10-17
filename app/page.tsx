@@ -20,6 +20,10 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortKey, setSortKey] = useState<"name" | "current_price" | "price_change_percentage_24h">("name");
+
+  const [selectedCryptos, setSelectedCryptos] = useState<Crypto[]>([]);
+
+
   const itemsPerPage = 6;
 
   useEffect(() => {
@@ -193,7 +197,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
           {currentCryptos.map((crypto) => (
             <div key={crypto.id} className="border p-4 rounded-lg shadow-lg bg-white">
               <h2 className="text-2xl font-bold text-black">{crypto.name}</h2>
@@ -205,14 +209,45 @@ export default function Home() {
               <PriceChart coinId={crypto.id} />
             </div>
           ))}
-        </div>
+        </div> */}
+
+
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+  {currentCryptos.map((crypto) => (
+    <div key={crypto.id} className="border p-4 rounded-lg shadow-lg bg-white">
+      <h2 className="text-2xl font-bold text-black">{crypto.name}</h2>
+      <img src={crypto.image} alt={crypto.name} className="w-12 h-12" />
+      <p className="text-black">Price: ${crypto.current_price}</p>
+      <p className="text-black">Market Cap: ${crypto.market_cap.toLocaleString()}</p>
+      <p className="text-black">24h Change: {crypto.price_change_percentage_24h}%</p>
+      <p className="text-black">Last updated: {new Date(crypto.last_updated).toLocaleString()}</p>
+      <PriceChart coinId={crypto.id} />
+      
+      {/* Add to Portfolio Button */}
+      <button
+  onClick={() => {
+    setSelectedCryptos((prev) => {
+      const updatedList = [...prev, crypto];
+      localStorage.setItem("portfolio", JSON.stringify(updatedList));
+      return updatedList;
+    });
+  }}
+  className="w-250 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-full hover:bg-indigo-700 mx-2"
+>
+  Add to Portfolio
+</button>
+
+    </div>
+  ))}
+</div>
+
 
         {/* Pagination Controls */}
         <div className="flex flex-col items-center mt-8 space-y-4">
           <div className="flex">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              className="w-20 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-full hover:bg-indigo-700 mx-2"
+              className={`w-20 h-10 flex items-center justify-center ${currentPage === 1 ? 'bg-gray-300' : 'bg-indigo-600 text-white'} rounded-full hover:bg-indigo-700`}
               disabled={currentPage === 1}
             >
               Previous
@@ -223,7 +258,7 @@ export default function Home() {
 
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className="w-20 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-full hover:bg-indigo-700 mx-2"
+              className={`w-20 h-10 flex items-center justify-center ${currentPage === totalPages ? 'bg-gray-300' : 'bg-indigo-600 text-white hover:bg-indigo-700'} rounded-full mx-2`}
               disabled={currentPage === totalPages}
             >
               Next

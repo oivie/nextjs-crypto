@@ -2,7 +2,6 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 
-// Define the type for the form data
 interface FormData {
   username: string;
   email: string;
@@ -42,15 +41,13 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-
-      {/* Signup Form Section */}
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-500 flex flex-col justify-center items-center">
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4 text-black">Sign Up</h1>
-        {error && <p className="text-red-500">{error}</p>}
-        {success && <p className="text-green-500">{success}</p>}
+        <h1 className="text-4xl font-bold mb-6 text-white">Join the Crypto Revolution!</h1>
+        {error && <p className="text-red-400">{error}</p>}
+        {success && <p className="text-green-400">{success}</p>}
 
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
           <div className="mb-4">
             <label className="block text-black font-bold mb-2" htmlFor="username">
               Username
@@ -58,10 +55,10 @@ export default function Signup() {
             <input
               type="text"
               id="username"
-              placeholder="Enter your username"
+              placeholder="Choose a username"
               value={formData.username}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full p-3 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -76,7 +73,7 @@ export default function Signup() {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full p-3 border border-gray-300 rounded-lg"
               required
             />
           </div>
@@ -88,30 +85,38 @@ export default function Signup() {
             <input
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              className="w-full p-3 border border-gray-300 rounded-lg"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="bg-blue-600 text-white p-2 rounded-lg w-full hover:bg-blue-700 transition duration-200"
+            className="bg-yellow-500 text-white p-3 rounded-lg w-full hover:bg-yellow-600 transition duration-200"
           >
             Sign Up
           </button>
         </form>
 
-        {/* Returning User? */}
         <div className="text-center mt-4">
-          <p className="text-black">
-            Already have an account?{" "}
-            <a href="/login" className="text-blue-600 hover:underline">
+          <p className="text-white">
+            Already a member?{" "}
+            <a href="/login" className="text-yellow-400 hover:underline">
               Log in here
             </a>
           </p>
+        </div>
+
+        <div className="mt-6 text-center">
+          <h2 className="text-xl font-bold text-white">Why Join Us?</h2>
+          <ul className="text-white mt-2">
+            <li>💰 Trade a variety of cryptocurrencies</li>
+            <li>🔒 Secure your assets with top-notch security</li>
+            <li>🚀 Get started with an exclusive welcome bonus</li>
+          </ul>
         </div>
       </div>
     </div>
