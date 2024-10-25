@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from 'next/image';
 import PriceChart from "./pages/components/PriceChart"; // Adjust the import path if necessary
 import "./globals.css";
 
@@ -154,52 +155,77 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen relative bg-gray-100">
+    <div className="min-h-screen relative bg-indigo-50">
+        {/* Decorative Blobs */}
+        <div className="absolute top-20 left-60 w-60 h-60 bg-blue-300 rounded-full opacity-50 blur-3xl z-10" />
+        <div className="absolute top-20 right-20 w-72 h-72 bg-pink-300 rounded-full opacity-25 blur-3xl z-10" />
+        {/* <div className="absolute bottom-10 left-20 w-96 h-96 bg-purple-400 rounded-full opacity-30 blur-3xl z-9" /> */}
 
-      {/* Section for Demo Info */}
-      <section className="bg-indigo-300 text-white py-12 px-6">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-4">Welcome to the Crypto Dashboard</h2>
-          <p className="text-lg">
-            This is a demo project. We are utilizing different APIs to provide insights into cryptocurrency trends and prices to help you make informed decisions.
-          </p>
+
+      {/* Section for Main Info */}
+      <section className="relative py-20 flex flex-col items-center text-center bg-indigo-50">
+        {/* Centered Logo */}
+        <div className="mb-6">
+          <Image
+            src="/logo128.png" // Adjust the path to the actual logo location
+            alt="App Logo"
+            width={128}
+            height={128}
+            className="mx-auto"
+          />
         </div>
+
+        {/* Heading with Gradient Text */}
+        <h2 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 mb-6">
+          Crypto Insights at Your Fingertips
+        </h2>
+
+        {/* Description Paragraph */}
+        <p className="text-lg max-w-3xl text-gray-700 opacity-90">
+          Real-time crypto trends, prices, and insights for smarter decisions.
+        </p>
+
       </section>
+
+
 
 
       {/* Dashboard Content */}
       <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-bold mb-4 text-black">Cryptocurrency Dashboard</h1>
 
-        {/* Search Bar and Sort Options */}
-        <div className="flex justify-between items-center mb-4">
-          {/* Search */}
-          <input
-            type="text"
-            placeholder="Search by name"
-            className="px-4 py-2 border rounded-lg text-black"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-
-          {/* Sort */}
-          <div>
-            <label className="mr-2 font-bold text-black">Sort by:</label>
-            <select
-              value={sortKey}
-              onChange={(e) => handleSortChange(e.target.value as "name" | "current_price" | "price_change_percentage_24h")}
+        <h1 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500 leading-tight">
+          Trends
+        </h1>
+          {/* Search Bar and Sort Options */}
+          <div className="flex justify-between items-center mb-4">
+            {/* Search */}
+            <input
+              type="text"
+              placeholder="Search by name"
               className="px-4 py-2 border rounded-lg text-black"
-            >
-              <option value="name">Name</option>
-              <option value="current_price">Price</option>
-              <option value="price_change_percentage_24h">Change (24h)</option>
-            </select>
-          </div>
-        </div>
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
 
-        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            {/* Sort */}
+            <div>
+              <label className="mr-2 font-bold text-black">Sort by:</label>
+              <select
+                value={sortKey}
+                onChange={(e) => handleSortChange(e.target.value as "name" | "current_price" | "price_change_percentage_24h")}
+                className="px-4 py-2 border rounded-lg text-black"
+              >
+                <option value="name">Name</option>
+                <option value="current_price">Price</option>
+                <option value="price_change_percentage_24h">Change (24h)</option>
+              </select>
+            </div>
+          </div>
+
+      {/* Crypto Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {currentCryptos.map((crypto) => (
-            <div key={crypto.id} className="border p-4 rounded-lg shadow-lg bg-white">
+            <div key={crypto.id} className="card">
               <h2 className="text-2xl font-bold text-black">{crypto.name}</h2>
               <img src={crypto.image} alt={crypto.name} className="w-12 h-12" />
               <p className="text-black">Price: ${crypto.current_price}</p>
@@ -207,39 +233,24 @@ export default function Home() {
               <p className="text-black">24h Change: {crypto.price_change_percentage_24h}%</p>
               <p className="text-black">Last updated: {new Date(crypto.last_updated).toLocaleString()}</p>
               <PriceChart coinId={crypto.id} />
+              
+              {/* Add to Portfolio Button */}
+              <button
+                onClick={() => {
+                  setSelectedCryptos((prev) => {
+                    const updatedList = [...prev, crypto];
+                    localStorage.setItem("portfolio", JSON.stringify(updatedList));
+                    return updatedList;
+                  });
+                }}
+                className="w-full h-10 mt-4 bg-indigo-500 text-white rounded-full hover:bg-blue-700 flex items-center justify-center"
+              >
+                Add to Portfolio
+              </button>
             </div>
           ))}
-        </div> */}
+        </div>
 
-
-<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-  {currentCryptos.map((crypto) => (
-    <div key={crypto.id} className="border p-4 rounded-lg shadow-lg bg-white">
-      <h2 className="text-2xl font-bold text-black">{crypto.name}</h2>
-      <img src={crypto.image} alt={crypto.name} className="w-12 h-12" />
-      <p className="text-black">Price: ${crypto.current_price}</p>
-      <p className="text-black">Market Cap: ${crypto.market_cap.toLocaleString()}</p>
-      <p className="text-black">24h Change: {crypto.price_change_percentage_24h}%</p>
-      <p className="text-black">Last updated: {new Date(crypto.last_updated).toLocaleString()}</p>
-      <PriceChart coinId={crypto.id} />
-      
-      {/* Add to Portfolio Button */}
-      <button
-  onClick={() => {
-    setSelectedCryptos((prev) => {
-      const updatedList = [...prev, crypto];
-      localStorage.setItem("portfolio", JSON.stringify(updatedList));
-      return updatedList;
-    });
-  }}
-  className="w-250 h-10 flex items-center justify-center bg-indigo-600 text-white rounded-full hover:bg-indigo-700 mx-2"
->
-  Add to Portfolio
-</button>
-
-    </div>
-  ))}
-</div>
 
 
         {/* Pagination Controls */}
@@ -247,7 +258,7 @@ export default function Home() {
           <div className="flex">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
-              className={`w-20 h-10 flex items-center justify-center ${currentPage === 1 ? 'bg-gray-300' : 'bg-indigo-600 text-white'} rounded-full hover:bg-indigo-700`}
+              className={`w-20 h-10 flex items-center justify-center px-2 ${currentPage === 1 ? 'bg-gray-300' : 'bg-indigo-600 text-white'} rounded-full hover:bg-indigo-700`}
               disabled={currentPage === 1}
             >
               Previous
@@ -258,7 +269,7 @@ export default function Home() {
 
             <button
               onClick={() => handlePageChange(currentPage + 1)}
-              className={`w-20 h-10 flex items-center justify-center ${currentPage === totalPages ? 'bg-gray-300' : 'bg-indigo-600 text-white hover:bg-indigo-700'} rounded-full mx-2`}
+              className={`w-20 h-10 flex items-center justify-center ${currentPage === totalPages ? 'bg-gray-300' : 'bg-indigo-600 text-white hover:bg-indigo-700 px-2'} rounded-full mx-2`}
               disabled={currentPage === totalPages}
             >
               Next

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navigation from "./components/Navigation"; 
-import Footer from "./components/Footer"; 
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
+// Import fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -27,8 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/img/favicon/favicon-16x16.png" />
+        <title>Crypto Dashboard</title>
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-indigo-50`} // Apply global background color
       >
         <Navigation /> {/* Render the Navigation component */}
         <main>{children}</main> {/* Main content */}

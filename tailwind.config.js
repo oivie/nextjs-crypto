@@ -7,7 +7,15 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}', // Include all files in the components folder
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropBlur: {
+        'none': 'none',
+        'sm': '4px',
+        'md': '8px',
+        'lg': '12px',
+        'xl': '24px',
+      },
+    },
   },
   plugins: [],
 };

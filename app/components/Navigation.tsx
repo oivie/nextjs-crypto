@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import Image from 'next/image'; // Import the Image component from Next.js
 
 export default function Navigation() {
   const pathname = usePathname(); // Get the current route path
@@ -34,12 +35,22 @@ export default function Navigation() {
       {/* Navigation Bar */}
       <nav className={`relative z-10 p-4 shadow-lg bg-[rgb(242,238,245)]`}>
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-          <div className="text-lg font-bold text-black mb-4 md:mb-0">Crypto Board</div>
+          {/* Logo and Crypto Board name */}
+          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <Image
+              src="/logo24.png"  // Adjust the path to the logo file
+              alt="Crypto Board Logo"
+              width={24} // Adjust the width according to your logo size
+              height={24} // Adjust the height according to your logo size
+            />
+            <div className="text-lg font-bold text-black">Crypto Board</div>
+          </div>
 
+          {/* Navigation Links */}
           <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
             <li>
               <Link href="/" className={linkClasses('/')}>
-                Dashboard
+                Main
               </Link>
             </li>
             <li>
@@ -53,15 +64,20 @@ export default function Navigation() {
               </Link>
             </li>
             <li>
+            <Link href="/analytics" className={linkClasses('/analytics')}> {/* Ensure this path is correct */}
+              Analytics
+            </Link>
+            </li>
+            {/* <li>
               <Link href="/alerts" className={linkClasses('/alerts')}>
                 Alerts
               </Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link href="/gainers-losers" className={linkClasses('/gainers-losers')}>
                 Top Gainers & Losers
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link href="/signup" className={linkClasses('/signup')}>
                 SignUp

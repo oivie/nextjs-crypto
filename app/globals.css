@@ -3,18 +3,19 @@
 @tailwind utilities;
 
 :root {
-  --background: rgb(209, 215, 234); /* Main background */
-  --foreground: #171717; /* Black text */
+  --background: #f4f4f9; /* Neutral light background */
+  --foreground: #171717; /* Text color */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a0a0a; /* Dark mode background */
+    --foreground: #ededed; /* Text color for dark mode */
   }
 }
 
-/* Applying noise and colored circles to the background */
+/* 
+Applying noise and colored circles to the background
 body {
   color: var(--foreground);
   background: var(--background);
@@ -22,10 +23,10 @@ body {
   position: relative;
   overflow-x: hidden;
   min-height: 100vh;
-}
+} */
 
 /* Colored circles for subtle background effect */
-body::before,
+/* body::before,
 body::after {
   content: '';
   position: absolute;
@@ -34,22 +35,22 @@ body::after {
   border-radius: 50%;
   filter: blur(100px);
   z-index: -1;
-}
-
+} */
+/* 
 body::before {
   top: 15%;
   left: 5%;
   background: rgba(100, 150, 250, 0.4); /* Blueish color */
-}
+/* }  */
 
-body::after {
+/* body::after {
   bottom: 15%;
   right: 10%;
-  background: rgba(255, 100, 150, 0.3); /* Pinkish color */
-}
+  background: rgba(255, 100, 150, 0.3);  /* Pinkish color */
+/* }  */
 
 /* Adding noise to the entire background */
-body::after {
+/* body::after {
   content: '';
   position: absolute;
   width: 100%;
@@ -60,4 +61,28 @@ body::after {
   background-size: 182px;
   opacity: 0.1;
   z-index: -2;
+} */
+
+
+
+h2 {
+  background: linear-gradient(to right, #3b82f6, #7c3aed, #ec4899); /* Use gradient for h2 */
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+
+
+
+/* Styling for cards to achieve a slightly colored box */
+.card {
+  background: rgba(250, 253, 254, 0.9); /* Slightly colored box */
+  border-radius: 1.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight hover effect */
 }
