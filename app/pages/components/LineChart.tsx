@@ -1,41 +1,70 @@
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import React from 'react';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+
 
 interface LineChartProps {
-  historicalData: {
-    date: string;  
-    price: number; 
-  }[] | null;
-  coinId: string; 
+  data: {
+    labels: string[];  // Labels (dates or custom labels)
+    prices: number[];   // Corresponding prices or values (market cap, etc.)
+  } | null;
+  label: string;  // Label for the chart (e.g., 'Market Cap', 'BTC Price')
 }
 
-const LineChart: React.FC<LineChartProps> = ({ historicalData, coinId }) => {
-  // Ensure historicalData is valid and has prices
-  if (!historicalData || !Array.isArray(historicalData) || historicalData.length === 0) {
+
+
+
+
+const LineChart: React.FC<LineChartProps> = ({ data, label }) => {
+  // Ensure the data is valid
+  if (!data || !Array.isArray(data.labels) || !Array.isArray(data.prices) || data.labels.length === 0) {
     return <p>Loading chart data...</p>;
   }
 
-  const labels = historicalData.map((data) => new Date(data.date).toLocaleDateString());
-  const prices = historicalData.map((data) => data.price);
-
   const chartData = {
-    labels: labels,
+    labels: data.labels,  // X-axis labels (dates or custom)
     datasets: [
       {
-        label: coinId,
-        data: prices,
-        borderColor: 'rgba(75, 192, 192, 1)',
+        label,  // Chart label (passed as prop)
+        data: data.prices,  // Y-axis data (prices or market cap values)
+        borderColor: 'rgba(75, 192, 192, 1)',  // Styling
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         fill: true,
       },
     ],
   };
 
-  return <Line data={chartData} />;
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+    },
+  };
+
+  return <Line data={chartData} options={options} />;
 };
-``
 
 export default LineChart;

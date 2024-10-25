@@ -11,17 +11,18 @@ interface HistoricalData {
 
 interface PortfolioItem {
   id: string;
+  name: string;
   currentPrice: number;
   historicalData: HistoricalData[];
 }
 
 export default function Portfolio() {
-  const [portfolioItems, setPortfolioItems] = useState<Crypto[]>([]);
+  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
 
   useEffect(() => {
     const storedPortfolio = localStorage.getItem("portfolio");
     if (storedPortfolio) {
-      const data: Crypto[] = JSON.parse(storedPortfolio);
+      const data: PortfolioItem[] = JSON.parse(storedPortfolio);
       setPortfolioItems(data);
     }
   }, []);
@@ -34,7 +35,7 @@ export default function Portfolio() {
           {portfolioItems.map((item) => (
             <div key={item.id} className="border p-4 rounded-lg shadow-lg bg-white">
               <h2 className="text-2xl font-bold text-black">{item.name}</h2>
-              <p className="text-black">Current Price: ${item.current_price}</p>
+              <p className="text-black">Current Price: ${item.currentPrice}</p>
               <div className="mt-4">
                 <LineChart historicalData={item.historicalData} coinId={item.id} />
               </div>

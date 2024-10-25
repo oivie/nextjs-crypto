@@ -1,5 +1,3 @@
-// app/api/cryptos/route.ts
-
 export async function GET(): Promise<Response> {
   try {
     const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd', {
