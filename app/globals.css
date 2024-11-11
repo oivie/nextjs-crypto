@@ -14,55 +14,6 @@
   }
 }
 
-/* 
-Applying noise and colored circles to the background
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  position: relative;
-  overflow-x: hidden;
-  min-height: 100vh;
-} */
-
-/* Colored circles for subtle background effect */
-/* body::before,
-body::after {
-  content: '';
-  position: absolute;
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  filter: blur(100px);
-  z-index: -1;
-} */
-/* 
-body::before {
-  top: 15%;
-  left: 5%;
-  background: rgba(100, 150, 250, 0.4); /* Blueish color */
-/* }  */
-
-/* body::after {
-  bottom: 15%;
-  right: 10%;
-  background: rgba(255, 100, 150, 0.3);  /* Pinkish color */
-/* }  */
-
-/* Adding noise to the entire background */
-/* body::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)'/%3E%3C/svg%3E");
-  background-size: 182px;
-  opacity: 0.1;
-  z-index: -2;
-} */
-
 
 
 h2 {
