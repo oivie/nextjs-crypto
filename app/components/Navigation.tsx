@@ -78,6 +78,11 @@ export default function Navigation() {
                 Top Gainers & Losers
               </Link>
             </li> */}
+                        <li>
+              <Link href="/login" className={linkClasses('/login')}>
+                Login
+              </Link>
+            </li>
             <li>
               <Link href="/signup" className={linkClasses('/signup')}>
                 SignUp
