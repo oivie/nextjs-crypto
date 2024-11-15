@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from 'next/image';
 import PriceChart from "./pages/components/PriceChart"; // Adjust the import path if necessary
 import "./globals.css";
+import LandingPage from "./components/LandingPage";
 
 // Interface for the crypto data
 interface Crypto {
@@ -156,46 +157,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen relative bg-indigo-50">
-        {/* Decorative Blobs */}
-        <div className="absolute top-20 left-60 w-60 h-60 bg-blue-300 rounded-full opacity-50 blur-3xl z-10" />
-        <div className="absolute top-20 right-20 w-72 h-72 bg-pink-300 rounded-full opacity-25 blur-3xl z-10" />
-        {/* <div className="absolute bottom-10 left-20 w-96 h-96 bg-purple-400 rounded-full opacity-30 blur-3xl z-9" /> */}
-
-
-      {/* Section for Main Info */}
-      <section className="relative py-20 flex flex-col items-center text-center bg-indigo-50">
-        {/* Centered Logo */}
-        <div className="mb-6">
-          <Image
-            src="/logo128.png" // Adjust the path to the actual logo location
-            alt="App Logo"
-            width={128}
-            height={128}
-            className="mx-auto"
-          />
-        </div>
-
-        {/* Heading with Gradient Text */}
-        <h2 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 mb-6">
-          Crypto Insights at Your Fingertips
-        </h2>
-
-        {/* Description Paragraph */}
-        <p className="text-lg max-w-3xl text-gray-700 opacity-90">
-          Real-time crypto trends, prices, and insights for smarter decisions.
-        </p>
-
-      </section>
-
-
-
+        <LandingPage />
 
       {/* Dashboard Content */}
       <div className="container mx-auto p-4">
 
-        <h1 className="text-5xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-pink-500 leading-tight">
-          Trends
-        </h1>
+          <h1 className="text-5xl font-bold mb-6 text-black leading-tight">
+            Market Overview
+          </h1>
+
           {/* Search Bar and Sort Options */}
           <div className="flex justify-between items-center mb-4">
             {/* Search */}
@@ -243,10 +213,11 @@ export default function Home() {
                     return updatedList;
                   });
                 }}
-                className="w-full h-10 mt-4 bg-indigo-500 text-white rounded-full hover:bg-blue-700 flex items-center justify-center"
+                className="w-full h-10 mt-4 bg-indigo-500 text-white rounded-full hover:bg-indigo-700 active:scale-95 transition duration-300 ease-in-out transform hover:shadow-lg flex items-center justify-center"
               >
                 Add to Portfolio
               </button>
+
             </div>
           ))}
         </div>
@@ -256,13 +227,16 @@ export default function Home() {
         {/* Pagination Controls */}
         <div className="flex flex-col items-center mt-8 space-y-4">
           <div className="flex">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              className={`w-20 h-10 flex items-center justify-center px-2 ${currentPage === 1 ? 'bg-gray-300' : 'bg-indigo-600 text-white'} rounded-full hover:bg-indigo-700`}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            className={`w-20 h-10 flex items-center justify-center px-2 rounded-full ${
+              currentPage === 1 ? 'bg-gray-300' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-md active:scale-90 transition-transform duration-300 ease-in-out'
+            }`}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+
 
             {/* Page Numbers */}
             <div className="flex space-x-2">{renderPageNumbers()}</div>

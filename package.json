@@ -14,7 +14,10 @@
     "bcrypt": "^5.1.1",
     "chart.js": "^4.4.5",
     "chartjs-chart-financial": "^0.2.1",
+    "clsx": "^2.1.1",
     "express": "^4.21.0",
+    "framer-motion": "^11.11.17",
+    "gsap": "^3.12.5",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.3",
     "next": "14.2.12",
@@ -24,6 +27,8 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
     "sequelize": "^6.37.3",
+    "simplex-noise": "^4.0.3",
+    "tailwind-merge": "^2.5.4",
     "tailwindcss": "^3.0.0"
   },
   "devDependencies": {
