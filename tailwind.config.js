@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        "custom-indigo": "#6366f1",
+        "custom-purple": "#a78bfa",
+        "custom-pink": "#f472b6",
+      },
       backdropBlur: {
         'none': 'none',
         'sm': '4px',
