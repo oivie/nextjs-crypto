@@ -1,5 +1,5 @@
 
-# Next.js Crypto Dashboard
+# Next.js Crypto Project
 A modern cryptocurrency dashboard built with Next.js, providing users with features like real-time market analytics, user authentication, and portfolio management. The app uses MongoDB for data storage, Chart.js for visualizations, and NextAuth.js for authentication.
 
 
