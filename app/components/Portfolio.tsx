@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter from Next.js
 import LineChart from "../pages/components/LineChart";
 
 interface HistoricalData {
@@ -20,6 +21,7 @@ interface PortfolioItem {
 export default function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
   const [userName, setUserName] = useState<string | null>(null); // State to store the username
+  const router = useRouter(); // Initialize useRouter
 
   useEffect(() => {
     // Retrieve the stored portfolio data from localStorage
@@ -36,6 +38,18 @@ export default function Portfolio() {
     }
   }, []);
 
+  // Function to remove an item from the portfolio
+  const removeFromPortfolio = (id: string) => {
+    const updatedPortfolio = portfolioItems.filter((item) => item.id !== id);
+    setPortfolioItems(updatedPortfolio);
+    localStorage.setItem("portfolio", JSON.stringify(updatedPortfolio)); // Update local storage
+  };
+
+  // Navigate to the main page to add a new item
+  const navigateToMainPage = () => {
+    router.push("/"); // Adjust the route to the actual main page
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto p-4">
@@ -45,6 +59,16 @@ export default function Portfolio() {
           <h2 className="text-2xl text-black">
             {userName ? `Welcome, ${userName}` : "Welcome, Guest"}
           </h2>
+        </div>
+
+        {/* Add Item Button */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={navigateToMainPage}
+            className="w-40 h-10 bg-green-500 text-white rounded-full hover:bg-green-700 active:scale-95 transition duration-300 ease-in-out transform hover:shadow-lg"
+          >
+            Add New Item
+          </button>
         </div>
 
         {/* Portfolio Grid */}
@@ -72,6 +96,14 @@ export default function Portfolio() {
                   label={`Price History for ${item.name}`}
                 />
               </div>
+
+              {/* Remove from Portfolio Button */}
+              <button
+                onClick={() => removeFromPortfolio(item.id)}
+                className="w-32 h-8 mt-4 bg-indigo-500 text-white rounded-full hover:bg-indigo-700 active:scale-95 transition duration-300 ease-in-out transform hover:shadow-lg flex items-center justify-center"
+              >
+                Remove
+              </button>
             </div>
           ))}
         </div>
