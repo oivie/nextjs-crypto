@@ -1,7 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 // Interface for the crypto data
 interface Crypto {
@@ -52,14 +56,18 @@ export default function AnalyticsPage() {
   // Ensure marketData is in the correct format for Chart.js
   const marketChartData = marketData
     ? {
-        labels: ['Total Market Cap'], // Labels for the chart (can be dynamic)
+        labels: ['Market Cap', 'Total Volume', 'Total Market Dominance'], // Labels for the chart
         datasets: [
           {
-            label: 'Market Cap (USD)',
-            data: [marketData.data.total_market_cap.usd], // Ensure this path exists in the response
-            borderColor: '#4F46E5',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            fill: true,
+            label: 'Market Data (USD)',
+            data: [
+              marketData.data.total_market_cap.usd, // Total market cap
+              marketData.data.total_volume.usd, // Total volume
+              marketData.data.market_cap_percentage.btc, // Market dominance for Bitcoin (example)
+            ],
+            backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+            borderColor: ['#4F46E5', '#9B59B6', '#FF9800'],
+            borderWidth: 1,
           },
         ],
       }
@@ -117,38 +125,39 @@ export default function AnalyticsPage() {
         </div>
       </div>
 
-      {/* Market Overview */}
+      {/* Market Overview with Bar Chart */}
       <div className="container mx-auto mb-12">
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Market Overview</h2>
         <div className="bg-white p-6 rounded-lg shadow-lg">
-          {marketChartData ? <Line data={marketChartData} /> : <p>No market data available</p>}
+          {marketChartData ? (
+            <Bar data={marketChartData} options={{ responsive: true }} />
+          ) : (
+            <p>No market data available</p>
+          )}
         </div>
       </div>
 
-    {/* Real-Time Alerts */}
-    <div className="container mx-auto mb-12">
-    <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Real-Time Alerts</h2>
-    <div className="bg-white p-6 rounded-lg shadow-lg space-y-4">
-        {alerts.map((crypto) => (
-        <div key={crypto.id} className="flex items-center p-4 border rounded-lg bg-gray-50 shadow-md hover:bg-gray-100 transition-all">
-            <img src={crypto.image} alt={crypto.name} className="w-10 h-10 rounded-full" />
-            <div className="ml-4 flex-1">
-            <h3 className="font-semibold text-gray-800">{crypto.name}</h3>
-            <p className="text-sm text-gray-600">Price: ${crypto.current_price.toFixed(2)}</p>
-            <p className={`text-sm font-bold ${crypto.price_change_percentage_24h > 0 ? 'text-green-500' : 'text-red-500'}`}>
-                24h Change: {crypto.price_change_percentage_24h.toFixed(2)}%
-            </p>
+      {/* Real-Time Alerts */}
+      <div className="container mx-auto mb-12">
+        <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Real-Time Alerts</h2>
+        <div className="bg-white p-6 rounded-lg shadow-lg space-y-4">
+          {alerts.map((crypto) => (
+            <div key={crypto.id} className="flex items-center p-4 border rounded-lg bg-gray-50 shadow-md hover:bg-gray-100 transition-all">
+              <img src={crypto.image} alt={crypto.name} className="w-10 h-10 rounded-full" />
+              <div className="ml-4 flex-1">
+                <h3 className="font-semibold text-gray-800">{crypto.name}</h3>
+                <p className="text-sm text-gray-600">Price: ${crypto.current_price.toFixed(2)}</p>
+                <p className={`text-sm font-bold ${crypto.price_change_percentage_24h > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                  24h Change: {crypto.price_change_percentage_24h.toFixed(2)}%
+                </p>
+              </div>
+              <div className={`p-2 rounded-full ${crypto.price_change_percentage_24h > 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+                {crypto.price_change_percentage_24h > 0 ? '📈' : '📉'}
+              </div>
             </div>
-            <div className={`p-2 rounded-full ${crypto.price_change_percentage_24h > 0 ? 'bg-green-100' : 'bg-red-100'}`}>
-            {crypto.price_change_percentage_24h > 0 ? '📈' : '📉'}
-            </div>
+          ))}
         </div>
-        ))}
-    </div>
-    </div>
-
-
-
+      </div>
     </div>
   );
 }

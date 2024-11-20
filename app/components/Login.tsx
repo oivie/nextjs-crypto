@@ -2,12 +2,14 @@
 "use client";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+  const router = useRouter(); // Use the Next.js router
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,13 +27,17 @@ export default function Login() {
       if (response.ok) {
         setSuccess("Login successful");
         setError("");
-        // Redirect or save token here if needed
+        localStorage.setItem("username", email);  // Store the username or any other user data
+
+        // Redirect to the portfolio page
+        router.push("/portfolio");
       } else {
         setError(data.error || "Login failed");
         setSuccess("");
       }
     } catch {
       setError("Something went wrong");
+      setSuccess("");
     }
   };
 
@@ -39,10 +45,20 @@ export default function Login() {
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-500 flex flex-col justify-center items-center">
       <div className="container mx-auto p-4">
         <h1 className="text-4xl font-bold mb-6 text-white">Login to Crypto Board</h1>
-        {error && <p className="text-red-400">{error}</p>}
-        {success && <p className="text-green-400">{success}</p>}
 
         <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+          {/* Display error or success message inside the form */}
+          {error && (
+            <div className="mb-4 p-3 text-red-700 bg-red-100 border border-red-400 rounded-lg">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="mb-4 p-3 text-green-700 bg-green-100 border border-green-400 rounded-lg">
+              {success}
+            </div>
+          )}
+
           <div className="mb-4">
             <label className="block text-black font-bold mb-2" htmlFor="email">
               Email

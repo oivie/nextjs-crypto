@@ -8,19 +8,19 @@ export default function Footer() {
           </p>
           <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
             <a
-              href="/privacy-policy"
+              href="#"
               className="text-gray-700 hover:text-indigo-600 transition duration-300 ease-in-out"
             >
               Privacy Policy
             </a>
             <a
-              href="/terms-of-service"
+              href="#"
               className="text-gray-700 hover:text-indigo-600 transition duration-300 ease-in-out"
             >
               Terms of Service
             </a>
             <a
-              href="/contact"
+              href="#"
               className="text-gray-700 hover:text-indigo-600 transition duration-300 ease-in-out"
             >
               Contact Us
