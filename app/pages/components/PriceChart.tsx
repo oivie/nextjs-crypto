@@ -10,11 +10,11 @@ interface PriceChartProps {
 
 const PriceChart = ({ coinId }: PriceChartProps) => {
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], // Dummy data
     datasets: [
       {
-        label: 'Price',
-        data: [100, 200, 150, 300, 250, 400],
+        label: `Price for ${coinId}`,
+        data: [100, 200, 150, 300, 250, 400], // Dummy values
         borderColor: 'rgba(75,192,192,1)',
         backgroundColor: 'rgba(75,192,192,0.2)',
         fill: true,
@@ -30,5 +30,6 @@ const PriceChart = ({ coinId }: PriceChartProps) => {
     </div>
   );
 };
+
 
 export default PriceChart;
