@@ -1,3 +1,20 @@
+
+# Next.js Crypto Dashboard
+A modern cryptocurrency dashboard built with Next.js, providing users with features like real-time market analytics, user authentication, and portfolio management. The app uses MongoDB for data storage, Chart.js for visualizations, and NextAuth.js for authentication.
+
+
+## APIs Used
+1. CoinGecko API: For fetching real-time cryptocurrency data.
+2. NextAuth.js: For user authentication and session management
+
+
+## Features
+• Real-Time Cryptocurrency Analytics: Track top gainers, losers, and market trends with data from CoinGecko API.
+• User Authentication: Secure login and signup functionality using NextAuth.js with MongoDB.
+• Responsive Design: Works seamlessly across devices.
+• Protected Routes: Access control for authenticated users.
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
