@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter from Next.js
+import { useRouter } from "next/navigation";
 import LineChart from "../pages/components/LineChart";
+import { exportToCSV } from "../utils/exportCsv";
+
 
 interface HistoricalData {
   date: string;
@@ -15,20 +17,22 @@ interface PortfolioItem {
   current_price: number;
   market_cap: number;
   price_change_percentage_24h: number;
-  historicalData: HistoricalData[]; // Optional: if you're including historical data
+  historicalData: HistoricalData[];
+  favorite: boolean; // New property
 }
 
 export default function Portfolio() {
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
-  const [userName, setUserName] = useState<string | null>(null); // State to store the username
-  const router = useRouter(); // Initialize useRouter
+  const [showFavorites, setShowFavorites] = useState<boolean>(false); // State to toggle favorite filter
+  const [userName, setUserName] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     // Retrieve the stored portfolio data from localStorage
     const storedPortfolio = localStorage.getItem("portfolio");
     if (storedPortfolio) {
       const data: PortfolioItem[] = JSON.parse(storedPortfolio);
-      setPortfolioItems(data); // Set the portfolio items in state
+      setPortfolioItems(data);
     }
 
     // Retrieve the logged-in user's name from localStorage
@@ -38,17 +42,31 @@ export default function Portfolio() {
     }
   }, []);
 
+  // Function to toggle favorite status
+  const toggleFavorite = (id: string) => {
+    const updatedPortfolio = portfolioItems.map((item) =>
+      item.id === id ? { ...item, favorite: !item.favorite } : item
+    );
+    setPortfolioItems(updatedPortfolio);
+    localStorage.setItem("portfolio", JSON.stringify(updatedPortfolio));
+  };
+
   // Function to remove an item from the portfolio
   const removeFromPortfolio = (id: string) => {
     const updatedPortfolio = portfolioItems.filter((item) => item.id !== id);
     setPortfolioItems(updatedPortfolio);
-    localStorage.setItem("portfolio", JSON.stringify(updatedPortfolio)); // Update local storage
+    localStorage.setItem("portfolio", JSON.stringify(updatedPortfolio));
   };
 
   // Navigate to the main page to add a new item
   const navigateToMainPage = () => {
-    router.push("/"); // Adjust the route to the actual main page
+    router.push("/");
   };
+
+  // Filtered portfolio items based on favorites
+  const displayedItems = showFavorites
+    ? portfolioItems.filter((item) => item.favorite)
+    : portfolioItems;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -62,18 +80,36 @@ export default function Portfolio() {
         </div>
 
         {/* Add Item Button */}
-        <div className="flex justify-end mb-4">
+        <div className="flex justify-end space-x-2 mb-4">
           <button
             onClick={navigateToMainPage}
             className="w-40 h-10 bg-green-500 text-white rounded-full hover:bg-green-700 active:scale-95 transition duration-300 ease-in-out transform hover:shadow-lg"
           >
             Add New Item
           </button>
+
+          <button
+            onClick={() => exportToCSV(portfolioItems, "portfolio.csv")}
+            className="w-40 h-10 bg-green-500 text-white rounded-full hover:bg-green-700 active:scale-95 transition duration-300 ease-in-out transform hover:shadow-lg"
+          >
+          Export to CSV
+          </button>
+
+
+          {/* Toggle Favorites Button */}
+          <button
+            onClick={() => setShowFavorites(!showFavorites)}
+            className={`w-40 h-10 ${
+              showFavorites ? "bg-green-500" : "bg-green-700"
+            } text-white rounded-full hover:bg-green-700 active:scale-95 transition duration-300 ease-in-out transform hover:shadow-lg`}
+          >
+            {showFavorites ? "Show All" : "Show Favorites"}
+          </button>
         </div>
 
         {/* Portfolio Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-          {portfolioItems.map((item) => (
+          {displayedItems.map((item) => (
             <div
               key={item.id}
               className="border p-4 rounded-lg shadow-lg bg-white"
@@ -86,16 +122,28 @@ export default function Portfolio() {
               <p className="text-black">
                 24h Change: {item.price_change_percentage_24h}%
               </p>
-              {/* If you have historical data */}
               <div className="mt-4">
                 <LineChart
                   data={{
-                    labels: item.historicalData?.map((entry) => entry.date) || [],
-                    prices: item.historicalData?.map((entry) => entry.price) || [],
+                    labels:
+                      item.historicalData?.map((entry) => entry.date) || [],
+                    prices:
+                      item.historicalData?.map((entry) => entry.price) || [],
                   }}
                   label={`Price History for ${item.name}`}
                 />
               </div>
+
+              {/* Favorite Button */}
+              <button
+                onClick={() => toggleFavorite(item.id)}
+                className={`w-8 h-8 rounded-full ${
+                  item.favorite ? "bg-yellow-400" : "bg-gray-200"
+                } hover:bg-yellow-500 flex items-center justify-center mt-4`}
+                title="Toggle Favorite"
+              >
+                {item.favorite ? "★" : "☆"}
+              </button>
 
               {/* Remove from Portfolio Button */}
               <button
