@@ -177,35 +177,35 @@ export default function Home() {
           Market Overview
         </h1>
 
-        {/* Search Bar and Sort Options */}
-        <div className="flex justify-between items-center mb-4">
-          {/* Search */}
-          <input
-            type="text"
-            placeholder="Search by name"
-            className="px-4 py-2 border rounded-lg text-black"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
+      {/* Search Bar and Sort Options */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
+        {/* Search */}
+        <input
+          type="text"
+          placeholder="Search by name"
+          className="flex-1 px-4 py-2 border rounded-lg text-black shadow-sm"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
 
-          {/* Sort */}
-          <div>
-            <label className="mr-2 font-bold text-black">Sort by:</label>
-            <select
-              value={sortKey}
-              onChange={(e) =>
-                handleSortChange(
-                  e.target.value as "name" | "current_price" | "price_change_percentage_24h"
-                )
-              }
-              className="px-4 py-2 border rounded-lg text-black"
-            >
-              <option value="name">Name</option>
-              <option value="current_price">Price</option>
-              <option value="price_change_percentage_24h">Change (24h)</option>
-            </select>
-          </div>
+        {/* Sort */}
+        <div className="flex items-center sm:justify-end space-x-2">
+          <label className="font-bold text-black whitespace-nowrap">Sort by:</label>
+          <select
+            value={sortKey}
+            onChange={(e) =>
+              handleSortChange(
+                e.target.value as "name" | "current_price" | "price_change_percentage_24h"
+              )
+            }
+            className="px-4 py-2 border rounded-lg text-black shadow-sm"
+          >
+            <option value="name">Name</option>
+            <option value="current_price">Price</option>
+            <option value="price_change_percentage_24h">Change (24h)</option>
+          </select>
         </div>
+      </div>
 
         {/* Crypto Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">

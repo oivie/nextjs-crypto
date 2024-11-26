@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Image from 'next/image'; // Import the Image component from Next.js
+import Image from 'next/image';
 
 export default function Navigation() {
   const pathname = usePathname(); // Get the current route path
   const [isSticky, setIsSticky] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for the mobile menu
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,25 +30,48 @@ export default function Navigation() {
 
   return (
     <div className={`relative ${isSticky ? 'sticky top-0 z-50 backdrop-blur-md shadow-lg' : ''}`}>
-      {/* White Background underneath the navbar */}
-      <div className="absolute bottom-0 w-full h-4 bg-white z-0" />
-
       {/* Navigation Bar */}
       <nav className={`relative z-10 p-4 shadow-lg bg-[rgb(242,238,245)]`}>
-        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div className="container mx-auto flex justify-between items-center">
           {/* Logo and Crypto Board name */}
-          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+          <div className="flex items-center space-x-2">
             <Image
-              src="/logo24.png"  // Adjust the path to the logo file
+              src="/logo24.png" // Adjust the path to the logo file
               alt="Crypto Board Logo"
-              width={24} // Adjust the width according to your logo size
-              height={24} // Adjust the height according to your logo size
+              width={24}
+              height={24}
             />
             <div className="text-lg font-bold text-black">Crypto Board</div>
           </div>
 
+          {/* Hamburger Menu for Mobile */}
+          <button
+            className="block md:hidden focus:outline-none"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+              />
+            </svg>
+          </button>
+
           {/* Navigation Links */}
-          <ul className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+          <ul
+            className={`${
+              isMenuOpen ? 'block' : 'hidden'
+            } md:flex md:space-x-4 md:items-center md:space-y-0 space-y-4 absolute md:static top-16 left-0 w-full md:w-auto bg-[rgb(242,238,245)] md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none`}
+          >
             <li>
               <Link href="/" className={linkClasses('/')}>
                 Main
@@ -64,21 +88,11 @@ export default function Navigation() {
               </Link>
             </li>
             <li>
-            <Link href="/analytics" className={linkClasses('/analytics')}> {/* Ensure this path is correct */}
-              Analytics
-            </Link>
+              <Link href="/analytics" className={linkClasses('/analytics')}>
+                Analytics
+              </Link>
             </li>
-            {/* <li>
-              <Link href="/alerts" className={linkClasses('/alerts')}>
-                Alerts
-              </Link>
-            </li> */}
-            {/* <li>
-              <Link href="/gainers-losers" className={linkClasses('/gainers-losers')}>
-                Top Gainers & Losers
-              </Link>
-            </li> */}
-                        <li>
+            <li>
               <Link href="/login" className={linkClasses('/login')}>
                 Login
               </Link>
