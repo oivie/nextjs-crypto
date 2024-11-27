@@ -69,8 +69,8 @@ export default function Navigation() {
           {/* Navigation Links */}
           <ul
             className={`${
-              isMenuOpen ? 'block' : 'hidden'
-            } md:flex md:space-x-4 md:items-center md:space-y-0 space-y-4 absolute md:static top-16 left-0 w-full md:w-auto bg-[rgb(242,238,245)] md:bg-transparent p-4 md:p-0 shadow-md md:shadow-none`}
+              isMenuOpen ? 'flex flex-col items-center text-center space-y-4 py-4' : 'hidden'
+            } md:flex md:space-x-4 md:items-center absolute md:static top-16 left-0 w-full md:w-auto bg-[rgb(242,238,245)] md:bg-transparent p-6 md:p-0 shadow-md md:shadow-none`}
           >
             <li>
               <Link href="/" className={linkClasses('/')}>
