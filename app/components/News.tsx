@@ -81,10 +81,10 @@ export default function News() {
         {currentArticles.length > 0 && (
           <div className="mb-8 bg-white shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
             {/* Featured Article Image */}
-            {currentArticles[0].urlToImage ? (
+            {currentArticles[8].urlToImage ? (
               <img
-                src={currentArticles[0].urlToImage}
-                alt={currentArticles[0].title}
+                src={currentArticles[8].urlToImage}
+                alt={currentArticles[8].title}
                 className="w-full md:w-1/2 h-64 object-cover"
               />
             ) : (
