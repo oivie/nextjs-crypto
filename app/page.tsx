@@ -6,6 +6,7 @@ import PriceChart from "./pages/components/PriceChart"; // Adjust the import pat
 import "./globals.css";
 import LandingPage from "./components/LandingPage";
 
+
 // Interface for the crypto data
 interface Crypto {
   id: string;
